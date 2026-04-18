@@ -81,9 +81,9 @@ const DAYS = [
     routes: [
       {
         step: "🏨 ホテル → 🥗 Matter (SoHo)",
-        line: "E",
-        detail: "Court Sq-23 St（ホテルから徒歩5分）→ Spring St（Manhattan-bound、直通7駅、約14分）",
-        walk: "Spring St 駅を出て Lafayette St を北へ徒歩3分 → 170 Crosby St",
+        line: "F",
+        detail: "21 St-Queensbridge（ホテルから徒歩7分）→ Broadway-Lafayette St（Manhattan-bound、直通、約18分）",
+        walk: "Broadway-Lafayette 駅から Crosby St を南に徒歩5分 → 170 Crosby St",
         fare: 2.90
       },
       {
@@ -102,16 +102,16 @@ const DAYS = [
       },
       {
         step: "🛍 SoHo → 🏙 Empire State Bldg",
-        line: "R / W",
-        detail: "Prince St（Broadway沿い）→ 34 St-Herald Sq（Uptown方面、約12分）",
-        walk: "Herald Sq から南へ1ブロック徒歩2分で ESB（350 5th Ave / Chipotle も同じビル）",
+        line: "F",
+        detail: "Broadway-Lafayette St → 34 St-Herald Sq（Uptown方面、直通3駅・約8分）",
+        walk: "Herald Sq から南東へ徒歩2分で ESB（350 5th Ave / Chipotle も同じビル）",
         fare: 2.90
       },
       {
         step: "🏙 ESB → 🏨 ホテル",
-        line: "E または M",
-        detail: "34 St-Penn Station（ESBから西へ徒歩5分）→ Court Sq-23 St（Queens-bound、直通約12分）",
-        walk: "Court Sq 駅から徒歩5分でホテル",
+        line: "F",
+        detail: "34 St-Herald Sq（ESBから徒歩2分）→ 21 St-Queensbridge（Queens-bound、直通、約12分）",
+        walk: "21 St-Queensbridge 駅から徒歩7分でホテル",
         fare: 2.90
       }
     ]
@@ -181,16 +181,16 @@ const DAYS = [
       },
       {
         step: "🏨 ホテル → 🏀 NBAストア (5th Ave)",
-        line: "E",
-        detail: "Court Sq-23 St → 5 Ave/53 St（Manhattan-bound、直通3駅、約10分）",
-        walk: "駅を出て 5th Ave を南へ徒歩5分 → 545 Fifth Ave",
+        line: "F",
+        detail: "21 St-Queensbridge（徒歩7分）→ 47-50 Sts-Rockefeller Ctr（Manhattan-bound、直通4駅、約12分）",
+        walk: "駅を出て東へ 5 Ave 方面、南下で徒歩5分 → 545 Fifth Ave",
         fare: 2.90
       },
       {
         step: "🏀 NBAストア → 🥗 Sweetgreen (MSG)",
-        line: "徒歩 or E/M",
-        detail: "徒歩15分（5 Ave南下 → 34 St）。急ぐなら 5 Ave/53 St → 34 St-Penn Station（2駅、直通）",
-        walk: "34 St-Penn Station から Sweetgreen（7 Penn Plaza / MSG直下）まで徒歩1分",
+        line: "徒歩 or F",
+        detail: "徒歩約12分（5 Ave南下 → 34 St-Penn）。急ぐなら 47-50 Sts → 34 St-Herald Sq（F線2駅）",
+        walk: "34 St-Herald Sq / Penn Station から Sweetgreen（7 Penn Plaza）まで徒歩3分",
         fare: 0
       },
       {
@@ -209,9 +209,9 @@ const DAYS = [
       },
       {
         step: "🍔 Stout → 🏨 ホテル",
-        line: "E または M",
-        detail: "34 St-Penn Station（Stoutから徒歩2分）→ Court Sq-23 St（約12分）",
-        walk: "Court Sq から徒歩5分でホテル。プレイオフ終了後は混雑注意",
+        line: "F",
+        detail: "34 St-Herald Sq（Stoutから徒歩3分）→ 21 St-Queensbridge（Queens-bound、直通、約12分）",
+        walk: "駅から徒歩7分でホテル。プレイオフ終了後は Herald Sq 周辺が混雑するので注意",
         fare: 2.90
       }
     ]
@@ -281,7 +281,7 @@ const DAYS = [
       }
     ],
     activities: [
-      { item: "🚇 地下鉄 LIC→BK Bridge→Williamsburg→LIC", cost: 8.70, note: "OMNY x3（帰りは G 直通）" },
+      { item: "🚇 地下鉄 LIC→DUMBO→Williamsburg→LIC", cost: 8.70, note: "OMNY x3（F→L→G）" },
       { item: "🌉 ブルックリンブリッジ徒歩", cost: 0, note: "無料。朝の光が最高" },
       { item: "📸 DUMBO 写真撮影", cost: 0, note: "Washington St x Water St" },
       { item: "🛍 Trader Joe's エコバッグ", cost: 5, note: "限定デザイン $3.99~", placeId: "ChIJieKUCG5ZwokRcFYGfu1T0Sc", instagram: "traderjoes" }
@@ -295,31 +295,31 @@ const DAYS = [
         fare: 0
       },
       {
-        step: "🏨 ホテル → 🌉 Brooklyn Bridge (Manhattan側)",
-        line: "7 → 4/5/6",
-        detail: "Court Sq → Grand Central-42 St（7ライン、約6分）、同駅で 4/5/6 に乗換 → Brooklyn Bridge-City Hall（約6分）",
-        walk: "改札を出て北へ徒歩2分でブリッジ入口（Park Row）",
+        step: "🏨 ホテル → 📸 DUMBO（F線で直通！）",
+        line: "F",
+        detail: "21 St-Queensbridge → York St（Brooklyn-bound / Coney Island方面、直通13駅、約25分）",
+        walk: "York St 駅を出て北西へ徒歩5分で Washington St × Water St の撮影スポット",
         fare: 2.90
       },
       {
-        step: "🌉 橋を徒歩で 📸 DUMBO へ",
+        step: "🌉 Brooklyn Bridge を徒歩（任意・往復）",
         line: "徒歩",
-        detail: "ブルックリンブリッジの歩行者・自転車レーンを東へ、約1.1マイル",
-        walk: "写真を撮りながら約30分。渡ったら階段/スロープで降りて DUMBO へ",
+        detail: "DUMBO側入口（Washington St 北端）から橋へ。マンハッタン側まで片道約1.1マイル/30分",
+        walk: "行って戻ると約60分。景色重視なら半分まで歩いて引き返す案（約30分）も。Manhattan→DUMBO方向で撮りたい場合は下記『代替ルート』参照",
         fare: 0
       },
       {
         step: "📸 DUMBO 散策 → 🍜 Dumbo Market（ランチ）",
         line: "徒歩",
-        detail: "Washington St x Water St の撮影ポイント（マンハッタンブリッジ背景）",
-        walk: "Dumbo Market（66 Front St）へ徒歩5分",
+        detail: "撮影ポイント（Washington×Water）→ Dumbo Market（66 Front St）",
+        walk: "徒歩5分",
         fare: 0
       },
       {
         step: "🍜 DUMBO → ☕ Devocion (Williamsburg)",
-        line: "F → L（推奨）または徒歩",
-        detail: "F ライン York St → Delancey St-Essex St で L に乗換 → Bedford Ave（合計約20分）。Devocion は 148 Grand St で徒歩10分",
-        walk: "景色重視なら Kent Ave を北上、Domino Park 経由で徒歩35分（おすすめ）。B62 バスでも20分",
+        line: "徒歩推奨 / または F→L",
+        detail: "徒歩: Kent Ave を北上、Domino Park 経由で約35分（ウォーターフロントの絶景）。電車: F York St → Delancey-Essex で L に乗換 → Bedford Ave（約20分＋徒歩10分）",
+        walk: "疲れていれば B62 バス（約20分）または Uber（約10分・$10-15）",
         fare: 2.90
       },
       {
@@ -331,16 +331,23 @@ const DAYS = [
       },
       {
         step: "🛍 Williamsburg → 🏨 ホテル (LIC)",
-        line: "G",
-        detail: "Metropolitan Ave-Grand St（L駅から1ブロック）→ Court Sq（Queens-bound、直通約12分）",
-        walk: "G ラインは Court Sq が終点。降りてすぐホテルへ徒歩5分",
+        line: "L → G",
+        detail: "Bedford Ave → Lorimer St（L線1駅）で G に乗換 → 21 St（G線、Queens-bound）",
+        walk: "G線の 21 St 駅からホテルまで徒歩約12分。楽に帰るなら Uber ($12-18、15分) 推奨",
         fare: 2.90
       },
       {
         step: "✈ [LGA 出発時] 🏨 ホテル → LaGuardia Airport",
-        line: "7 + M60 SBS バス",
-        detail: "Court Sq → 74 St-Broadway (Jackson Hts-Roosevelt Ave)（7ライン、約8分）→ M60 SBS バス → LGA（20-25分）",
-        walk: "合計約45分、運賃合計 $2.90（地下鉄からバス乗換は2時間以内無料）。キャリーケースあれば Uber/Lyft $25-35 推奨",
+        line: "N/W + Q70 SBS",
+        detail: "Queensboro Plaza（徒歩15分）→ N/W で Astoria Blvd（約6分）→ Q70 SBS バス → LGA（約15分、無料乗換）",
+        walk: "合計約45分・運賃 $2.90。荷物ありなら Uber/Lyft ($25-35、20分) を強く推奨",
+        fare: 2.90
+      },
+      {
+        step: "📝 代替: Manhattan→DUMBO 方向で橋を歩きたい場合",
+        line: "F (片道) → 徒歩 → F (帰路)",
+        detail: "F で East Broadway 下車 → 徒歩10-12分で Brooklyn Bridge-City Hall 側入口 → 橋を DUMBO へ徒歩30分",
+        walk: "East Broadway 駅→橋入口は道が複雑。Google Mapsでナビ推奨。時間的には直通F案より30-40分多くかかる",
         fare: 2.90
       }
     ]
@@ -756,18 +763,28 @@ function NYCTripPlanner() {
             }}>
               <div style={{ fontSize: 13, fontWeight: 800, color: "#4FC3F7", marginBottom: 6 }}>🚇 NYC地下鉄・完全ガイド</div>
 
-              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 6 }}>📍 ホテル最寄駅（重要）</div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 6 }}>📍 ホテル最寄駅（重要・要確認済）</div>
               <div style={{ paddingLeft: 8, fontSize: 11 }}>
-                <div><strong style={{color:"#fff"}}>Court Sq-23 St</strong>（ホテルから徒歩5分）</div>
-                <div>乗り入れ路線: <span style={{background:"#B933AD",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800}}>7</span> <span style={{background:"#2850AD",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800,marginLeft:3}}>E</span> <span style={{background:"#FF6319",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800,marginLeft:3}}>M</span> <span style={{background:"#6CBE45",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800,marginLeft:3}}>G</span></div>
+                <div><strong style={{color:"#fff"}}>21 St-Queensbridge</strong>（ホテル 38-42 11th St から徒歩7分）</div>
+                <div>乗り入れ路線: <span style={{background:"#FF6319",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800}}>F</span> のみ</div>
+                <div style={{fontSize:10, color:"#888", marginTop:3}}>※Court Sq (7/E/M/G) は徒歩15-20分と遠い。基本はF線一本で大半の場所へ行ける</div>
               </div>
 
-              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>🎯 方面別の使い分け</div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>🎯 F線で行ける主要スポット（直通）</div>
               <div style={{ paddingLeft: 8, fontSize: 11 }}>
-                <div><span style={{color:"#2850AD",fontWeight:800}}>E</span> → Midtown / SoHo 方面（ESB, Chipotle, Matter）</div>
-                <div><span style={{color:"#B933AD",fontWeight:800}}>7</span> → Times Sq / Grand Central（Brooklyn Bridge乗換）</div>
-                <div><span style={{color:"#FF6319",fontWeight:800}}>M</span> → Midtown（5 Ave/53 St, NBAストア）</div>
-                <div><span style={{color:"#6CBE45",fontWeight:800}}>G</span> → Williamsburg / Brooklyn 直通（Devocion帰路）</div>
+                <div>・47-50 Sts-Rockefeller Ctr（NBAストアから徒歩5分）</div>
+                <div>・42 St-Bryant Park（タイムズスクエアから徒歩5分）</div>
+                <div>・34 St-Herald Sq（ESB / MSG / Sweetgreen / Stout すべて徒歩圏）</div>
+                <div>・Broadway-Lafayette St（SoHo / Matter / Eileen's）</div>
+                <div>・York St（DUMBO ど真ん中・Day3のキー駅）</div>
+                <div>・Delancey-Essex St（Williamsburg行き L線への乗換）</div>
+              </div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>🚶 他駅も選択肢</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div>・<strong>Queensboro Plaza</strong>（徒歩15分）: <span style={{color:"#FCCC0A",fontWeight:800}}>N</span> <span style={{color:"#FCCC0A",fontWeight:800}}>W</span> <span style={{color:"#B933AD",fontWeight:800}}>7</span> 利用。LGA行き (N/W+Q70) や Times Sq 方面に有用</div>
+                <div>・<strong>Queens Plaza</strong>（徒歩15分）: <span style={{color:"#2850AD",fontWeight:800}}>E</span> <span style={{color:"#FF6319",fontWeight:800}}>M</span> <span style={{color:"#FCCC0A",fontWeight:800}}>R</span> 利用</div>
+                <div>・<strong>Court Sq</strong>（徒歩15-20分）: <span style={{color:"#6CBE45",fontWeight:800}}>G</span> Williamsburg帰路で使う場合</div>
               </div>
 
               <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>💳 支払い（OMNY推奨）</div>
