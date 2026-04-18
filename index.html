@@ -77,6 +77,43 @@ const DAYS = [
       { item: "🏋️ Gymshark SoHo", cost: 0, note: "見学のみ", instagram: "gymshark" },
       { item: "🎨 MoMA Design Store", cost: 0, note: "見学のみ", instagram: "momadesignstore" },
       { item: "🏙 ESB 86F展望台", cost: 44, note: "公式サイト事前購入で$42", placeId: "ChIJaXQRs6lZwokRY6EFpJnhNNE", instagram: "empirestatebldg" }
+    ],
+    routes: [
+      {
+        step: "🏨 ホテル → 🥗 Matter (SoHo)",
+        line: "E",
+        detail: "Court Sq-23 St（ホテルから徒歩5分）→ Spring St（Manhattan-bound、直通7駅、約14分）",
+        walk: "Spring St 駅を出て Lafayette St を北へ徒歩3分 → 170 Crosby St",
+        fare: 2.90
+      },
+      {
+        step: "🥗 Matter → 🍰 Eileen's Cheesecake",
+        line: "徒歩",
+        detail: "170 Crosby St → 17 Cleveland Pl",
+        walk: "北東に徒歩4分（Crosby St → Kenmare St → Cleveland Pl）",
+        fare: 0
+      },
+      {
+        step: "🍰 Eileen's → 🛍 Gymshark / 🎨 MoMA Design Store",
+        line: "徒歩",
+        detail: "SoHoエリア内移動（Gymshark: 563 Broadway / MoMA: 81 Spring St）",
+        walk: "いずれも徒歩5〜8分圏内",
+        fare: 0
+      },
+      {
+        step: "🛍 SoHo → 🏙 Empire State Bldg",
+        line: "R / W",
+        detail: "Prince St（Broadway沿い）→ 34 St-Herald Sq（Uptown方面、約12分）",
+        walk: "Herald Sq から南へ1ブロック徒歩2分で ESB（350 5th Ave / Chipotle も同じビル）",
+        fare: 2.90
+      },
+      {
+        step: "🏙 ESB → 🏨 ホテル",
+        line: "E または M",
+        detail: "34 St-Penn Station（ESBから西へ徒歩5分）→ Court Sq-23 St（Queens-bound、直通約12分）",
+        walk: "Court Sq 駅から徒歩5分でホテル",
+        fare: 2.90
+      }
     ]
   },
   {
@@ -87,18 +124,17 @@ const DAYS = [
     color: "#FF6B35",
     meals: [
       {
-        time: "🥣 朝食（7:30頃）",
-        spot: "Fresh From Hell",
-        address: "676 9th Ave, Hell's Kitchen",
-        rating: 4.5,
-        why: "TMPLジムから徒歩5分。ワークアウト前のクリーンな燃料補給。",
-        order: "Hell's Kitchen Sink Bowl + フレッシュOJ",
-        macros: "P≈15g / F≈12g / C≈55g",
-        cost: 16,
-        hours: "月 7:00-20:00",
-        note: "アサイーボウルはワークアウト前の燃料として最適",
-        placeId: "ChIJJd-4_1NYwokRegME8dO2Dlw",
-        instagram: "freshfromhellnyc"
+        time: "🥣 朝食（館内 7:00頃）",
+        spot: "ホテル朝食（無料）",
+        address: "TownePlace Suites by Marriott NY LIC - Manhattan View",
+        rating: 4.2,
+        why: "宿泊特典の無料ホットブレックファスト。ワークアウト前のクリーンな燃料補給に最適。",
+        order: "スクランブルエッグ + ターキーソーセージ + ギリシャヨーグルト + フルーツ + オートミール",
+        macros: "P≈25g / F≈10g / C≈45g",
+        cost: 0,
+        hours: "平日 6:30-9:30 / 土日 7:00-10:00",
+        note: "ホテル宿泊特典（2日目・3日目の朝食に利用）",
+        hotel: true
       },
       {
         time: "🥩 ランチ（13:00頃）",
@@ -130,10 +166,54 @@ const DAYS = [
       }
     ],
     activities: [
-      { item: "🚇 地下鉄 LIC→HK→Midtown→LIC", cost: 8.70, note: "OMNY x3" },
-      { item: "🏋️ TMPL Fitness デイパス", cost: 45, note: "プール/サウナ付。事前TEL確認", placeId: "ChIJ4TLixVZYwokRfjpYrjwZ7Jc", instagram: "tmplfitness" },
+      { item: "🚇 地下鉄 LIC⇔Midtown", cost: 5.80, note: "OMNY x2（往復）" },
+      { item: "🏋️ ホテル内フィットネスセンター", cost: 0, note: "TownePlace Suites LIC 館内・宿泊特典・24H利用可" },
       { item: "🏀 NBAストア 5th Ave", cost: 0, note: "見学のみ", instagram: "nbastore" },
       { item: "🌃 タイムズスクエア", cost: 0, note: "無料" }
+    ],
+    routes: [
+      {
+        step: "🥣 朝食 & 🏋️ トレーニング",
+        line: "館内",
+        detail: "ホテル1Fラウンジ（朝食）とフィットネスセンターを利用。移動ゼロ。",
+        walk: "出発前にプロテイン補給推奨",
+        fare: 0
+      },
+      {
+        step: "🏨 ホテル → 🏀 NBAストア (5th Ave)",
+        line: "E",
+        detail: "Court Sq-23 St → 5 Ave/53 St（Manhattan-bound、直通3駅、約10分）",
+        walk: "駅を出て 5th Ave を南へ徒歩5分 → 545 Fifth Ave",
+        fare: 2.90
+      },
+      {
+        step: "🏀 NBAストア → 🥗 Sweetgreen (MSG)",
+        line: "徒歩 or E/M",
+        detail: "徒歩15分（5 Ave南下 → 34 St）。急ぐなら 5 Ave/53 St → 34 St-Penn Station（2駅、直通）",
+        walk: "34 St-Penn Station から Sweetgreen（7 Penn Plaza / MSG直下）まで徒歩1分",
+        fare: 0
+      },
+      {
+        step: "🥗 Sweetgreen → 🌃 Times Square",
+        line: "徒歩",
+        detail: "34 St → 42 St 北上",
+        walk: "7th Ave / Broadway 沿いに徒歩約10分",
+        fare: 0
+      },
+      {
+        step: "🌃 Times Square → 🍔 Stout NYC (ニックス観戦前飯)",
+        line: "徒歩",
+        detail: "42 St → 35 St（Stout: 215 W 35th St）",
+        walk: "南へ7ブロック・徒歩5分",
+        fare: 0
+      },
+      {
+        step: "🍔 Stout → 🏨 ホテル",
+        line: "E または M",
+        detail: "34 St-Penn Station（Stoutから徒歩2分）→ Court Sq-23 St（約12分）",
+        walk: "Court Sq から徒歩5分でホテル。プレイオフ終了後は混雑注意",
+        fare: 2.90
+      }
     ]
   },
   {
@@ -144,18 +224,17 @@ const DAYS = [
     color: "#4ECDC4",
     meals: [
       {
-        time: "🍳 朝食（7:00頃）",
-        spot: "Court Square Diner",
-        address: "45-30 23rd St, LIC",
-        rating: 4.4,
-        why: "ホテル至近の24H営業クラシックダイナー。安くてボリューム満点。",
-        order: "Egg White Omelette（ターキー/スピナッチ/トマト）+ トースト",
-        macros: "P≈32g / F≈8g / C≈30g",
-        cost: 13,
-        hours: "24時間営業",
-        note: "NYCらしいレトロダイナー。コーヒーおかわり自由",
-        placeId: "ChIJN6wFwihZwokRMtxwzGii9PI",
-        instagram: null
+        time: "🍳 朝食（館内 7:00頃）",
+        spot: "ホテル朝食（無料）",
+        address: "TownePlace Suites by Marriott NY LIC - Manhattan View",
+        rating: 4.2,
+        why: "宿泊特典の無料ホットブレックファスト。最終日もホテルで手早く済ませて出発。",
+        order: "スクランブルエッグ + ターキーソーセージ + フルーツ + コーヒー",
+        macros: "P≈25g / F≈10g / C≈40g",
+        cost: 0,
+        hours: "平日 6:30-9:30 / 土日 7:00-10:00",
+        note: "ホテル宿泊特典（チェックアウト前に利用）",
+        hotel: true
       },
       {
         time: "🍜 ランチ（12:30頃）",
@@ -202,17 +281,73 @@ const DAYS = [
       }
     ],
     activities: [
-      { item: "🚇 地下鉄 LIC→BK Bridge→WB→LGA", cost: 11.60, note: "OMNY x4" },
+      { item: "🚇 地下鉄 LIC→BK Bridge→Williamsburg→LIC", cost: 8.70, note: "OMNY x3（帰りは G 直通）" },
       { item: "🌉 ブルックリンブリッジ徒歩", cost: 0, note: "無料。朝の光が最高" },
       { item: "📸 DUMBO 写真撮影", cost: 0, note: "Washington St x Water St" },
       { item: "🛍 Trader Joe's エコバッグ", cost: 5, note: "限定デザイン $3.99~", placeId: "ChIJieKUCG5ZwokRcFYGfu1T0Sc", instagram: "traderjoes" }
+    ],
+    routes: [
+      {
+        step: "🥣 朝食",
+        line: "館内",
+        detail: "ホテル1Fラウンジでホットブレックファスト",
+        walk: "チェックアウトは12:00までが一般的（要確認）",
+        fare: 0
+      },
+      {
+        step: "🏨 ホテル → 🌉 Brooklyn Bridge (Manhattan側)",
+        line: "7 → 4/5/6",
+        detail: "Court Sq → Grand Central-42 St（7ライン、約6分）、同駅で 4/5/6 に乗換 → Brooklyn Bridge-City Hall（約6分）",
+        walk: "改札を出て北へ徒歩2分でブリッジ入口（Park Row）",
+        fare: 2.90
+      },
+      {
+        step: "🌉 橋を徒歩で 📸 DUMBO へ",
+        line: "徒歩",
+        detail: "ブルックリンブリッジの歩行者・自転車レーンを東へ、約1.1マイル",
+        walk: "写真を撮りながら約30分。渡ったら階段/スロープで降りて DUMBO へ",
+        fare: 0
+      },
+      {
+        step: "📸 DUMBO 散策 → 🍜 Dumbo Market（ランチ）",
+        line: "徒歩",
+        detail: "Washington St x Water St の撮影ポイント（マンハッタンブリッジ背景）",
+        walk: "Dumbo Market（66 Front St）へ徒歩5分",
+        fare: 0
+      },
+      {
+        step: "🍜 DUMBO → ☕ Devocion (Williamsburg)",
+        line: "F → L（推奨）または徒歩",
+        detail: "F ライン York St → Delancey St-Essex St で L に乗換 → Bedford Ave（合計約20分）。Devocion は 148 Grand St で徒歩10分",
+        walk: "景色重視なら Kent Ave を北上、Domino Park 経由で徒歩35分（おすすめ）。B62 バスでも20分",
+        fare: 2.90
+      },
+      {
+        step: "☕ Devocion → 🛍 Trader Joe's",
+        line: "徒歩",
+        detail: "148 Grand St → 139 N 6th St（Williamsburg内）",
+        walk: "徒歩約8分",
+        fare: 0
+      },
+      {
+        step: "🛍 Williamsburg → 🏨 ホテル (LIC)",
+        line: "G",
+        detail: "Metropolitan Ave-Grand St（L駅から1ブロック）→ Court Sq（Queens-bound、直通約12分）",
+        walk: "G ラインは Court Sq が終点。降りてすぐホテルへ徒歩5分",
+        fare: 2.90
+      },
+      {
+        step: "✈ [LGA 出発時] 🏨 ホテル → LaGuardia Airport",
+        line: "7 + M60 SBS バス",
+        detail: "Court Sq → 74 St-Broadway (Jackson Hts-Roosevelt Ave)（7ライン、約8分）→ M60 SBS バス → LGA（20-25分）",
+        walk: "合計約45分、運賃合計 $2.90（地下鉄からバス乗換は2時間以内無料）。キャリーケースあれば Uber/Lyft $25-35 推奨",
+        fare: 2.90
+      }
     ]
   }
 ];
 
 const FIXED_COSTS = [
-  { category: "🏨 ホテル（LIC）", min: 300, max: 500, note: "2泊 $150-250/泊" },
-  { category: "✈️ 航空券", min: 0, max: 0, note: "既にお持ちと想定" },
   { category: "🛍 ショッピング予算", min: 100, max: 300, note: "Gymshark/NBAストア/ヴィンテージ" }
 ];
 
@@ -339,6 +474,62 @@ function ActivityRow({ a }) {
   );
 }
 
+function RouteCard({ r, dayColor, idx }) {
+  const lineColors = {
+    "7": "#B933AD", "E": "#2850AD", "M": "#FF6319", "G": "#6CBE45",
+    "F": "#FF6319", "R": "#FCCC0A", "W": "#FCCC0A", "B": "#FF6319",
+    "D": "#FF6319", "N": "#FCCC0A", "Q": "#FCCC0A",
+    "4": "#00933C", "5": "#00933C", "6": "#00933C",
+    "L": "#A7A9AC", "A": "#2850AD", "C": "#2850AD"
+  };
+  const lineTokens = (r.line || "").split(/[^A-Z0-9]+/).filter(t => t.length === 1 || /^\d$/.test(t));
+  return (
+    <div style={{
+      background: "#0f0f0f", borderRadius: 10, padding: "10px 12px",
+      marginBottom: 6, borderLeft: "3px solid " + dayColor + "88", fontSize: 11
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
+        <div style={{ fontSize: 12, fontWeight: 800, color: "#e8e8e8", flex: 1 }}>
+          <span style={{
+            display: "inline-block", width: 18, height: 18, borderRadius: "50%",
+            background: dayColor + "33", color: dayColor,
+            fontSize: 10, fontWeight: 800, textAlign: "center", lineHeight: "18px",
+            marginRight: 6, fontFamily: "monospace"
+          }}>{idx + 1}</span>
+          {r.step}
+        </div>
+        <span style={{
+          fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+          color: r.fare === 0 ? "#4ECDC4" : "#999", whiteSpace: "nowrap"
+        }}>
+          {r.fare === 0 ? "FREE" : "$" + r.fare.toFixed(2)}
+        </span>
+      </div>
+      <div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
+        {lineTokens.length > 0 ? lineTokens.map((t, i) => (
+          <span key={i} style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            width: 22, height: 22, borderRadius: "50%",
+            background: lineColors[t] || "#666", color: "#fff",
+            fontSize: 11, fontWeight: 900, fontFamily: "Helvetica, sans-serif"
+          }}>{t}</span>
+        )) : (
+          <span style={{
+            padding: "2px 7px", borderRadius: 10, background: "#222", color: "#aaa",
+            fontSize: 10, fontWeight: 700
+          }}>{r.line}</span>
+        )}
+        <span style={{ color: "#bbb", fontSize: 11, flex: 1, minWidth: 0 }}>{r.detail}</span>
+      </div>
+      {r.walk && (
+        <div style={{ marginTop: 5, fontSize: 10, color: "#888", paddingLeft: 2 }}>
+          🚶 {r.walk}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function NYCTripPlanner() {
   const [activeDay, setActiveDay] = useState(0);
   const day = DAYS[activeDay];
@@ -349,7 +540,7 @@ function NYCTripPlanner() {
   const totalVariable = totalMeals + totalActivities;
   const grandMin = totalVariable + FIXED_COSTS.reduce((s, c) => s + c.min, 0);
   const grandMax = totalVariable + FIXED_COSTS.reduce((s, c) => s + c.max, 0);
-  const dailyP = [95, 92, 67];
+  const dailyP = [95, 102, 60];
 
   return (
     <div style={{
@@ -445,6 +636,13 @@ function NYCTripPlanner() {
 
             <div style={{ fontSize: 9, color: "#666", letterSpacing: 2, marginTop: 16, marginBottom: 6, fontFamily: "monospace" }}>ACTIVITIES</div>
             {day.activities.map((a, i) => <ActivityRow key={i} a={a} />)}
+
+            {day.routes && (
+              <>
+                <div style={{ fontSize: 9, color: "#666", letterSpacing: 2, marginTop: 16, marginBottom: 6, fontFamily: "monospace" }}>🚇 ROUTES（LIC起点・電車&徒歩）</div>
+                {day.routes.map((r, i) => <RouteCard key={i} r={r} dayColor={day.color} idx={i} />)}
+              </>
+            )}
           </>
         ) : (
           <>
@@ -549,6 +747,61 @@ function NYCTripPlanner() {
               <div>🔹 <strong style={{color:"#ddd"}}>平均P</strong> {Math.round(dailyP.reduce((a,b)=>a+b,0)/3)}g/日</div>
             </div>
 
+            {/* Subway Guide */}
+            <div style={{
+              background: "#0d1422", borderRadius: 10,
+              padding: "14px 14px", marginTop: 12,
+              border: "1px solid #4285F433",
+              fontSize: 11, lineHeight: 1.7, color: "#bbb"
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#4FC3F7", marginBottom: 6 }}>🚇 NYC地下鉄・完全ガイド</div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 6 }}>📍 ホテル最寄駅（重要）</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div><strong style={{color:"#fff"}}>Court Sq-23 St</strong>（ホテルから徒歩5分）</div>
+                <div>乗り入れ路線: <span style={{background:"#B933AD",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800}}>7</span> <span style={{background:"#2850AD",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800,marginLeft:3}}>E</span> <span style={{background:"#FF6319",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800,marginLeft:3}}>M</span> <span style={{background:"#6CBE45",color:"#fff",padding:"1px 5px",borderRadius:3,fontWeight:800,marginLeft:3}}>G</span></div>
+              </div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>🎯 方面別の使い分け</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div><span style={{color:"#2850AD",fontWeight:800}}>E</span> → Midtown / SoHo 方面（ESB, Chipotle, Matter）</div>
+                <div><span style={{color:"#B933AD",fontWeight:800}}>7</span> → Times Sq / Grand Central（Brooklyn Bridge乗換）</div>
+                <div><span style={{color:"#FF6319",fontWeight:800}}>M</span> → Midtown（5 Ave/53 St, NBAストア）</div>
+                <div><span style={{color:"#6CBE45",fontWeight:800}}>G</span> → Williamsburg / Brooklyn 直通（Devocion帰路）</div>
+              </div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>💳 支払い（OMNY推奨）</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div>・改札機に <strong>Apple Pay / Google Pay / コンタクトレスカード</strong> をタップ（$2.90/回）</div>
+                <div>・月〜日の週単位で <strong>$34でキャップ</strong>（12回乗れば以降その週は無料）</div>
+                <div>・同じカードで毎回タップ＝カードをパスに紐付けずOK</div>
+                <div>・バス→地下鉄、地下鉄→バスの<strong>乗換は2時間以内無料</strong></div>
+              </div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>🧭 方向の見方</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div>・<strong>Uptown</strong> = 北行き / <strong>Downtown</strong> = 南行き</div>
+                <div>・LIC発マンハッタン行きは "<strong>Manhattan-bound</strong>" 案内板を探す</div>
+                <div>・Queens方向は "<strong>Queens-bound</strong>"（=帰路）</div>
+                <div>・Express(急行) / Local(各停) の区別に注意（路線図で白丸=各停駅のみ停車）</div>
+              </div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>📱 おすすめアプリ</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div>・<strong>Citymapper</strong>（NYCで最強、リアルタイム遅延表示）</div>
+                <div>・<strong>Google Maps</strong>（乗換検索＋徒歩ルート）</div>
+                <div>・<strong>MTA公式</strong>（運行情報）</div>
+              </div>
+
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#ddd", marginTop: 8 }}>⚠️ 注意事項</div>
+              <div style={{ paddingLeft: 8, fontSize: 11 }}>
+                <div>・深夜は一部路線が運休・迂回。帰路は<strong>22時までが安全</strong></div>
+                <div>・同じ駅名でもホームが分かれている場合あり（例: Court Sq の G と 7 は少し離れる）</div>
+                <div>・車両間の移動は違法&危険。1両に留まる</div>
+                <div>・ラッシュ時(7-9時/17-19時)は避けられるなら避ける</div>
+              </div>
+            </div>
+
             <div style={{
               background: "#1a1a0d", borderRadius: 10,
               padding: "12px 14px", marginTop: 10,
@@ -557,7 +810,8 @@ function NYCTripPlanner() {
             }}>
               <div style={{ fontSize: 11, fontWeight: 800, color: "#E8B931", marginBottom: 3 }}>⚠️ 注意</div>
               <div>・Em Vietnamese 火曜定休→Dumbo Marketに変更済</div>
-              <div>・TMPL デイパス$40-50は変動あり。事前TEL確認</div>
+              <div>・Day2/3 朝食・トレーニングはホテル内で実施（TMPLデイパスは削除）</div>
+              <div>・ホテル代・航空券は予約済のため合計から除外</div>
               <div>・ESB料金は2025年時点。改定の可能性あり</div>
               <div>・為替$1=150で計算</div>
               <div>・ニックスPO日程は仮定</div>
