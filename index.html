@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>NYC Trip Planner</title>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0a0a; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  #loading { color:#888; font-family:-apple-system,sans-serif; text-align:center; padding:80px 20px; font-size:13px; }
+</style>
+</head>
+<body>
+<div id="root"><div id="loading">Loading NYC Trip Planner...</div></div>
+<script type="text/babel" data-presets="react">
+const { useState } = React;
+
+const DAYS = [
+  {
+    day: 1,
+    date: "4/19（日）",
+    title: "マンハッタン・インサイド",
+    weather: "🌧 雨天考慮",
+    color: "#E8B931",
+    meals: [
+      {
+        time: "🥗 ランチ（14:00頃）",
+        spot: "Matter",
+        address: "170 Crosby St, SoHo",
+        rating: 4.8,
+        why: "全食材をグラム単位で計量→マクロ（PFC）が正確。鶏胸肉ボウルがベスト。Gymshark & MoMA Design Store から徒歩2分。",
+        order: "Chicken Protein Bowl（玄米 / グリーン / 鶏胸肉）",
+        macros: "P≈40g / F≈10g / C≈50g",
+        cost: 16,
+        hours: "日 10:00-21:00",
+        note: "アプリ事前注文で昼の行列回避可",
+        placeId: "ChIJaXO9TGJZwokRqgH59EL2o2Y",
+        instagram: "eatmatter"
+      },
+      {
+        time: "🍰 スイーツ（16:00頃）",
+        spot: "Eileen's Special Cheesecake",
+        address: "17 Cleveland Pl, SoHo",
+        rating: 4.6,
+        why: "旅のご褒美枠。ミニサイズなのでダメージ最小限。",
+        order: "Mini Cheesecake（Original or Salted Caramel）",
+        macros: "P≈5g / F≈12g / C≈20g（ミニ1個）",
+        cost: 6,
+        hours: "日 11:00-19:00",
+        note: "チートミール枠。ミニ1個に留める！",
+        placeId: "ChIJaeOQ3IhZwokRgxPZEE3noAM",
+        instagram: "eileenscheesecake"
+      },
+      {
+        time: "🍗 ディナー（20:00頃）",
+        spot: "Chipotle Mexican Grill",
+        address: "350 5th Ave（ESB内）",
+        rating: 3.9,
+        why: "ESBの真下にあり動線最強。ボウルにすれば高たんぱく低脂質を維持。",
+        order: "Chicken Burrito Bowl: 白米/黒豆/チキン/ファヒータ野菜/サルサ/レタス（チーズ・サワークリーム抜き）",
+        macros: "P≈50g / F≈8g / C≈55g",
+        cost: 13,
+        hours: "日 10:45-23:00",
+        note: "注文時 'No cheese, no sour cream, extra fajita veggies' で脂質カット",
+        placeId: "ChIJXRnGGrpZwokRwnVCoiX6Q08",
+        instagram: "chipotle"
+      }
+    ],
+    activities: [
+      { item: "🚇 地下鉄 LIC→SoHo→Midtown", cost: 5.80, note: "OMNY x2" },
+      { item: "🏋️ Gymshark SoHo", cost: 0, note: "見学のみ", instagram: "gymshark" },
+      { item: "🎨 MoMA Design Store", cost: 0, note: "見学のみ", instagram: "momadesignstore" },
+      { item: "🏙 ESB 86F展望台", cost: 44, note: "公式サイト事前購入で$42", placeId: "ChIJaXQRs6lZwokRY6EFpJnhNNE", instagram: "empirestatebldg" }
+    ]
+  },
+  {
+    day: 2,
+    date: "4/20（月）",
+    title: "パンプアップ & プレイオフ",
+    weather: "💪 トレーニング日",
+    color: "#FF6B35",
+    meals: [
+      {
+        time: "🥣 朝食（7:30頃）",
+        spot: "Fresh From Hell",
+        address: "676 9th Ave, Hell's Kitchen",
+        rating: 4.5,
+        why: "TMPLジムから徒歩5分。ワークアウト前のクリーンな燃料補給。",
+        order: "Hell's Kitchen Sink Bowl + フレッシュOJ",
+        macros: "P≈15g / F≈12g / C≈55g",
+        cost: 16,
+        hours: "月 7:00-20:00",
+        note: "アサイーボウルはワークアウト前の燃料として最適",
+        placeId: "ChIJJd-4_1NYwokRegME8dO2Dlw",
+        instagram: "freshfromhellnyc"
+      },
+      {
+        time: "🥩 ランチ（13:00頃）",
+        spot: "Sweetgreen",
+        address: "7 Pennsylvania Plaza（MSG至近）",
+        rating: 3.8,
+        why: "ポストワークアウト。NBAストアからの移動途中、MSG横。カロリー表示あり。",
+        order: "Harvest Bowl（チキン追加）or カスタム: チキン+ケール+玄米+レモン",
+        macros: "P≈42g / F≈14g / C≈40g",
+        cost: 17,
+        hours: "月 10:30-21:00",
+        note: "Protein Plate メニューならP50g+。アプリ注文推奨",
+        placeId: "ChIJ082aafdZwokR-QrAmtZfvgg",
+        instagram: "sweetgreen"
+      },
+      {
+        time: "🍔 ディナー（19:30頃）",
+        spot: "Stout NYC",
+        address: "215 W 35th St（MSG徒歩3分）",
+        rating: 4.3,
+        why: "ニックス・プレイオフ第2戦！大画面・MSG直近スポーツバー。",
+        order: "Grilled Chicken Sandwich + サラダ + ビール x2-3",
+        macros: "P≈35g / F≈20g / C≈45g（食事のみ）",
+        cost: 50,
+        hours: "月 11:30-25:00",
+        note: "プレイオフ激混み→18:30入店推奨。月曜オイスター$1/個！",
+        placeId: "ChIJJ91wx65ZwokRnjW2e69Imic",
+        instagram: "stoutnyc"
+      }
+    ],
+    activities: [
+      { item: "🚇 地下鉄 LIC→HK→Midtown→LIC", cost: 8.70, note: "OMNY x3" },
+      { item: "🏋️ TMPL Fitness デイパス", cost: 45, note: "プール/サウナ付。事前TEL確認", placeId: "ChIJ4TLixVZYwokRfjpYrjwZ7Jc", instagram: "tmplfitness" },
+      { item: "🏀 NBAストア 5th Ave", cost: 0, note: "見学のみ", instagram: "nbastore" },
+      { item: "🌃 タイムズスクエア", cost: 0, note: "無料" }
+    ]
+  },
+  {
+    day: 3,
+    date: "4/21（火）",
+    title: "ブルックリン・ドリーム",
+    weather: "☀️ 晴天",
+    color: "#4ECDC4",
+    meals: [
+      {
+        time: "🍳 朝食（7:00頃）",
+        spot: "Court Square Diner",
+        address: "45-30 23rd St, LIC",
+        rating: 4.4,
+        why: "ホテル至近の24H営業クラシックダイナー。安くてボリューム満点。",
+        order: "Egg White Omelette（ターキー/スピナッチ/トマト）+ トースト",
+        macros: "P≈32g / F≈8g / C≈30g",
+        cost: 13,
+        hours: "24時間営業",
+        note: "NYCらしいレトロダイナー。コーヒーおかわり自由",
+        placeId: "ChIJN6wFwihZwokRMtxwzGii9PI",
+        instagram: null
+      },
+      {
+        time: "🍜 ランチ（12:30頃）",
+        spot: "Em Vietnamese Bistro",
+        address: "57 Front St, DUMBO",
+        rating: 4.6,
+        why: "DUMBO撮影スポットから徒歩3分。フォーは低脂質高たんぱくの代表格。",
+        order: "Pho Ga（チキンフォー）",
+        macros: "P≈35g / F≈6g / C≈50g",
+        cost: 16,
+        hours: "火 CLOSED",
+        note: "",
+        placeId: "ChIJDQJJHAtbwokR6Ljf1I9DUFA",
+        instagram: "emvietnamesebistro",
+        closed: true
+      },
+      {
+        time: "🍜 ランチ代替",
+        spot: "Dumbo Market ホットバー",
+        address: "66 Front St, DUMBO",
+        rating: 4.3,
+        why: "Em Vietnameseが火曜定休のため代替。量り売りでグリルチキン+野菜を自由に選べる。",
+        order: "Grilled Chicken + Roasted Vegetables + Brown Rice",
+        macros: "P≈35g / F≈10g / C≈40g",
+        cost: 14,
+        hours: "火 7:00-23:00",
+        note: "量り売り$10.99/lb前後。盛りすぎ注意",
+        placeId: "ChIJY74BA8lbwokR4BrWjkFJf0w",
+        instagram: null
+      },
+      {
+        time: "☕ カフェ（15:00頃）",
+        spot: "Devocion",
+        address: "148 Grand St, Williamsburg",
+        rating: 4.5,
+        why: "ウィリアムズバーグのアイコンカフェ。コロンビア産シングルオリジン。",
+        order: "Iced Black Coffee（カロリーほぼゼロ）",
+        macros: "P≈0g / F≈0g / C≈0g",
+        cost: 6,
+        hours: "火 7:00-18:00",
+        note: "ラテは脂質増→ブラック推奨。ヴィンテージショップ前の一息",
+        placeId: "ChIJi7flemFZwokRDpIJuxfOGek",
+        instagram: "daborecoffee"
+      }
+    ],
+    activities: [
+      { item: "🚇 地下鉄 LIC→BK Bridge→WB→LGA", cost: 11.60, note: "OMNY x4" },
+      { item: "🌉 ブルックリンブリッジ徒歩", cost: 0, note: "無料。朝の光が最高" },
+      { item: "📸 DUMBO 写真撮影", cost: 0, note: "Washington St x Water St" },
+      { item: "🛍 Trader Joe's エコバッグ", cost: 5, note: "限定デザイン $3.99~", placeId: "ChIJieKUCG5ZwokRcFYGfu1T0Sc", instagram: "traderjoes" }
+    ]
+  }
+];
+
+const FIXED_COSTS = [
+  { category: "🏨 ホテル（LIC）", min: 300, max: 500, note: "2泊 $150-250/泊" },
+  { category: "✈️ 航空券", min: 0, max: 0, note: "既にお持ちと想定" },
+  { category: "🛍 ショッピング予算", min: 100, max: 300, note: "Gymshark/NBAストア/ヴィンテージ" }
+];
+
+function MacroBadge({ label, val, color }) {
+  return (
+    <span style={{
+      display: "inline-block", padding: "2px 6px", borderRadius: 4,
+      fontSize: 10, fontWeight: 700, background: color + "18",
+      color, marginRight: 3, fontFamily: "monospace"
+    }}>{label}{val}</span>
+  );
+}
+
+function LinkBtn({ href, children, color }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      onClick={e => e.stopPropagation()}
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 3,
+        padding: "4px 9px", borderRadius: 6,
+        background: color + "15", color,
+        fontSize: 11, fontWeight: 700, textDecoration: "none",
+        marginRight: 5, marginTop: 4,
+        border: "1px solid " + color + "30"
+      }}>
+      {children}
+    </a>
+  );
+}
+
+function MealCard({ meal, dayColor }) {
+  const [open, setOpen] = useState(false);
+  const isClosed = meal.closed;
+  const gmapUrl = meal.placeId
+    ? "https://www.google.com/maps/place/?q=place_id:" + meal.placeId
+    : "https://www.google.com/maps/search/" + encodeURIComponent(meal.spot + " " + meal.address);
+  const igUrl = meal.instagram ? "https://www.instagram.com/" + meal.instagram + "/" : null;
+
+  return (
+    <div style={{
+      background: isClosed ? "#1a1a1a" : "#141414",
+      borderRadius: 12, padding: "14px 14px", marginBottom: 8,
+      borderLeft: "3px solid " + (isClosed ? "#555" : dayColor),
+      opacity: isClosed ? 0.35 : 1, cursor: "pointer"
+    }} onClick={() => setOpen(!open)}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 11, color: "#999" }}>{meal.time}</div>
+          <div style={{ fontSize: 15, fontWeight: 800, color: isClosed ? "#666" : "#f0f0f0" }}>
+            {meal.spot} {isClosed && <span style={{ color: "#ff4444", fontSize: 10 }}>火曜定休</span>}
+          </div>
+          <div style={{ fontSize: 10, color: "#666", marginTop: 1 }}>{meal.address}</div>
+        </div>
+        <div style={{
+          background: dayColor + "22", color: dayColor,
+          padding: "4px 9px", borderRadius: 7,
+          fontWeight: 800, fontSize: 14, fontFamily: "monospace",
+          whiteSpace: "nowrap", marginLeft: 6
+        }}>
+          ${meal.cost}
+        </div>
+      </div>
+
+      {!isClosed && (
+        <div style={{ marginTop: 6 }}>
+          <LinkBtn href={gmapUrl} color="#4285F4">📍 Google Map</LinkBtn>
+          {igUrl && <LinkBtn href={igUrl} color="#E1306C">📷 Instagram</LinkBtn>}
+        </div>
+      )}
+
+      {!isClosed && (
+        <div style={{ marginTop: 8 }}>
+          <div style={{ fontSize: 11, color: "#bbb", marginBottom: 4 }}>📋 {meal.order}</div>
+          <div>
+            <MacroBadge label="P" val={meal.macros?.split("/")[0]?.replace("P≈","")?.trim()} color="#4FC3F7" />
+            <MacroBadge label="F" val={meal.macros?.split("/")[1]?.replace("F≈","")?.trim()} color="#FFB74D" />
+            <MacroBadge label="C" val={meal.macros?.split("/")[2]?.replace("C≈","")?.trim()} color="#81C784" />
+          </div>
+        </div>
+      )}
+
+      {open && !isClosed && (
+        <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #2a2a2a", fontSize: 11, color: "#aaa", lineHeight: 1.7 }}>
+          <div>{"⭐"} {meal.rating}/5 · 🕐 {meal.hours}</div>
+          <div style={{ marginTop: 4 }}>💡 {meal.why}</div>
+          {meal.note && <div style={{ marginTop: 4, color: dayColor }}>📝 {meal.note}</div>}
+        </div>
+      )}
+      <div style={{ fontSize: 9, color: "#555", textAlign: "right", marginTop: 3 }}>
+        {open ? "▲ 閉じる" : "▼ 詳細"}
+      </div>
+    </div>
+  );
+}
+
+function ActivityRow({ a }) {
+  const gmapUrl = a.placeId ? "https://www.google.com/maps/place/?q=place_id:" + a.placeId : null;
+  const igUrl = a.instagram ? "https://www.instagram.com/" + a.instagram + "/" : null;
+
+  return (
+    <div style={{ padding: "10px 12px", background: "#111", borderRadius: 8, marginBottom: 5, fontSize: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ color: "#ddd", flex: 1 }}>{a.item}</span>
+        <span style={{
+          fontFamily: "monospace", fontWeight: 700,
+          color: a.cost === 0 ? "#4ECDC4" : "#e8e8e8",
+          whiteSpace: "nowrap", marginLeft: 6
+        }}>
+          {a.cost === 0 ? "FREE" : "$" + a.cost.toFixed(2)}
+        </span>
+      </div>
+      <div style={{ fontSize: 10, color: "#666", marginTop: 1 }}>{a.note}</div>
+      {(gmapUrl || igUrl) && (
+        <div style={{ marginTop: 4 }}>
+          {gmapUrl && <LinkBtn href={gmapUrl} color="#4285F4">📍 Map</LinkBtn>}
+          {igUrl && <LinkBtn href={igUrl} color="#E1306C">📷 IG</LinkBtn>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function NYCTripPlanner() {
+  const [activeDay, setActiveDay] = useState(0);
+  const day = DAYS[activeDay];
+  const mealsByDay = DAYS.map(d => d.meals.filter(m => !m.closed).reduce((s, m) => s + m.cost, 0));
+  const activitiesByDay = DAYS.map(d => d.activities.reduce((s, a) => s + a.cost, 0));
+  const totalMeals = mealsByDay.reduce((s, v) => s + v, 0);
+  const totalActivities = activitiesByDay.reduce((s, v) => s + v, 0);
+  const totalVariable = totalMeals + totalActivities;
+  const grandMin = totalVariable + FIXED_COSTS.reduce((s, c) => s + c.min, 0);
+  const grandMax = totalVariable + FIXED_COSTS.reduce((s, c) => s + c.max, 0);
+  const dailyP = [95, 92, 67];
+
+  return (
+    <div style={{
+      fontFamily: "-apple-system, 'Hiragino Sans', sans-serif",
+      background: "#0a0a0a", color: "#e8e8e8",
+      minHeight: "100vh", padding: "0 0 40px 0",
+      maxWidth: 480, margin: "0 auto"
+    }}>
+      {/* Header */}
+      <div style={{
+        background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)",
+        padding: "24px 14px 18px", borderBottom: "1px solid #222"
+      }}>
+        <div style={{ fontSize: 9, color: "#888", letterSpacing: 3, fontFamily: "monospace" }}>
+          NYC TRIP PLAN — CLEAN EATING EDITION
+        </div>
+        <h1 style={{
+          fontSize: 22, fontWeight: 800, margin: "6px 0 3px",
+          background: "linear-gradient(90deg, #E8B931, #FF6B35, #4ECDC4)",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+        }}>
+          🗽 3 Days in New York
+        </h1>
+        <div style={{ fontSize: 11, color: "#777" }}>4/19-21 · 高たんぱく低脂質 · Budget</div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: "flex", borderBottom: "1px solid #222" }}>
+        {DAYS.map((d, i) => (
+          <button key={i} onClick={() => setActiveDay(i)} style={{
+            flex: 1, padding: "10px 2px",
+            background: activeDay === i ? "#141414" : "transparent",
+            border: "none",
+            borderBottom: activeDay === i ? "3px solid " + d.color : "3px solid transparent",
+            color: activeDay === i ? d.color : "#666",
+            fontSize: 11, fontWeight: activeDay === i ? 800 : 600,
+            cursor: "pointer"
+          }}>
+            Day {d.day}
+            <div style={{ fontSize: 8, marginTop: 1, color: activeDay === i ? "#999" : "#555" }}>{d.date.slice(0,4)}</div>
+          </button>
+        ))}
+        <button onClick={() => setActiveDay(3)} style={{
+          flex: 1, padding: "10px 2px",
+          background: activeDay === 3 ? "#141414" : "transparent",
+          border: "none",
+          borderBottom: activeDay === 3 ? "3px solid #ff4081" : "3px solid transparent",
+          color: activeDay === 3 ? "#ff4081" : "#666",
+          fontSize: 11, fontWeight: activeDay === 3 ? 800 : 600,
+          cursor: "pointer"
+        }}>
+          💰合計
+        </button>
+      </div>
+
+      <div style={{ padding: "14px 10px" }}>
+        {activeDay < 3 ? (
+          <>
+            {/* Day header */}
+            <div style={{
+              background: day.color + "12", borderRadius: 12,
+              padding: "12px 14px", marginBottom: 14,
+              border: "1px solid " + day.color + "33"
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: day.color }}>{day.title}</div>
+                  <div style={{ fontSize: 10, color: "#999", marginTop: 1 }}>{day.date} {day.weather}</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 8, color: "#777" }}>日計</div>
+                  <div style={{ fontSize: 18, fontWeight: 800, color: day.color, fontFamily: "monospace" }}>
+                    ${mealsByDay[activeDay] + activitiesByDay[activeDay]}
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+                {[
+                  { l: "🍽食事", v: "$" + mealsByDay[activeDay], c: "#f0f0f0" },
+                  { l: "🎟体験", v: "$" + activitiesByDay[activeDay], c: "#f0f0f0" },
+                  { l: "💪P", v: dailyP[activeDay] + "g", c: "#4FC3F7" }
+                ].map((s, i) => (
+                  <div key={i} style={{ background: "#0a0a0a", borderRadius: 6, padding: "5px 8px", flex: 1, textAlign: "center" }}>
+                    <div style={{ fontSize: 8, color: "#777" }}>{s.l}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: s.c, fontFamily: "monospace" }}>{s.v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ fontSize: 9, color: "#666", letterSpacing: 2, marginBottom: 6, fontFamily: "monospace" }}>MEAL PLAN</div>
+            {day.meals.map((m, i) => <MealCard key={i} meal={m} dayColor={day.color} />)}
+
+            <div style={{ fontSize: 9, color: "#666", letterSpacing: 2, marginTop: 16, marginBottom: 6, fontFamily: "monospace" }}>ACTIVITIES</div>
+            {day.activities.map((a, i) => <ActivityRow key={i} a={a} />)}
+          </>
+        ) : (
+          <>
+            <div style={{
+              background: "linear-gradient(135deg, #ff408122, #E8B93122)",
+              borderRadius: 14, padding: "18px 14px", marginBottom: 18,
+              border: "1px solid #ff408133", textAlign: "center"
+            }}>
+              <div style={{ fontSize: 9, color: "#999", letterSpacing: 2, fontFamily: "monospace" }}>ESTIMATED TOTAL</div>
+              <div style={{
+                fontSize: 28, fontWeight: 800,
+                background: "linear-gradient(90deg, #ff4081, #E8B931)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                margin: "4px 0"
+              }}>
+                ${grandMin} - ${grandMax}
+              </div>
+              <div style={{ fontSize: 10, color: "#777" }}>
+                {"= " + Math.round(grandMin * 150).toLocaleString() + " - " + Math.round(grandMax * 150).toLocaleString() + " JPY"}
+                <span style={{ fontSize: 8, color: "#555" }}> ($1=150)</span>
+              </div>
+            </div>
+
+            <div style={{ fontSize: 9, color: "#666", letterSpacing: 2, marginBottom: 8, fontFamily: "monospace" }}>DAILY</div>
+            {DAYS.map((d, i) => (
+              <div key={i} style={{
+                background: "#141414", borderRadius: 10,
+                padding: "12px 14px", marginBottom: 6,
+                borderLeft: "3px solid " + d.color
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <span style={{ fontWeight: 800, color: d.color, fontSize: 13 }}>Day {d.day}</span>
+                    <span style={{ color: "#777", fontSize: 10, marginLeft: 6 }}>{d.title}</span>
+                  </div>
+                  <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: 15, color: d.color }}>
+                    ${mealsByDay[i] + activitiesByDay[i]}
+                  </span>
+                </div>
+                <div style={{ display: "flex", gap: 10, marginTop: 4, fontSize: 10, color: "#888" }}>
+                  <span>🍽${mealsByDay[i]}</span>
+                  <span>🎟${activitiesByDay[i]}</span>
+                  <span>💪P:{dailyP[i]}g</span>
+                </div>
+              </div>
+            ))}
+
+            <div style={{ fontSize: 9, color: "#666", letterSpacing: 2, marginTop: 16, marginBottom: 8, fontFamily: "monospace" }}>CATEGORY</div>
+            {[
+              { label: "🍽 食事 3日分", min: totalMeals, max: totalMeals, note: "クリーン食事プラン" },
+              { label: "🎟 体験+交通", min: totalActivities, max: totalActivities, note: "ESB+TMPL+地下鉄+TJ" },
+              ...FIXED_COSTS
+            ].map((c, i) => (
+              <div key={i} style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                padding: "9px 11px", background: "#111", borderRadius: 7, marginBottom: 4
+              }}>
+                <div>
+                  <div style={{ fontSize: 11, color: "#ddd" }}>{c.label || c.category}</div>
+                  <div style={{ fontSize: 9, color: "#666" }}>{c.note}</div>
+                </div>
+                <div style={{ fontFamily: "monospace", fontWeight: 700, color: "#f0f0f0", whiteSpace: "nowrap" }}>
+                  {c.min === c.max ? "$" + c.min : "$" + c.min + "-" + c.max}
+                </div>
+              </div>
+            ))}
+
+            {/* Macros */}
+            <div style={{ background: "#141414", borderRadius: 10, padding: "12px 14px", marginTop: 16, border: "1px solid #333" }}>
+              <div style={{ fontSize: 12, fontWeight: 800, color: "#f0f0f0", marginBottom: 8 }}>📊 3日間マクロ</div>
+              <div style={{ display: "flex", gap: 5 }}>
+                {[
+                  { l: "Protein", v: "~" + dailyP.reduce((a,b)=>a+b,0) + "g", s: Math.round(dailyP.reduce((a,b)=>a+b,0)/3) + "g/日", c: "#4FC3F7" },
+                  { l: "Fat", v: "~120g", s: "40g/日", c: "#FFB74D" },
+                  { l: "Carbs", v: "~570g", s: "190g/日", c: "#81C784" }
+                ].map((m, i) => (
+                  <div key={i} style={{
+                    flex: 1, background: m.c + "11", borderRadius: 7,
+                    padding: "8px 4px", textAlign: "center", border: "1px solid " + m.c + "22"
+                  }}>
+                    <div style={{ fontSize: 8, color: "#777" }}>{m.l}</div>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: m.c, fontFamily: "monospace" }}>{m.v}</div>
+                    <div style={{ fontSize: 8, color: "#999" }}>{m.s}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tips */}
+            <div style={{
+              background: "#0d1f1a", borderRadius: 10,
+              padding: "12px 14px", marginTop: 12,
+              border: "1px solid #4ECDC433",
+              fontSize: 11, lineHeight: 1.7, color: "#aaa"
+            }}>
+              <div style={{ fontSize: 12, fontWeight: 800, color: "#4ECDC4", marginBottom: 4 }}>💡 Tips</div>
+              <div>🔹 <strong style={{color:"#ddd"}}>OMNY</strong> 週$34自動キャップ。タップ払いOK</div>
+              <div>🔹 <strong style={{color:"#ddd"}}>Chipotle</strong> ボウル+トルティーヤ別添え=具材1.5倍</div>
+              <div>🔹 <strong style={{color:"#ddd"}}>水</strong> ボトル持参+公園給水機で$0</div>
+              <div>🔹 <strong style={{color:"#ddd"}}>Stout</strong> 月曜オイスター$1 高P低Fつまみ最強</div>
+              <div>🔹 <strong style={{color:"#ddd"}}>ESB</strong> 公式事前購入で$2節約+行列スキップ</div>
+              <div>🔹 <strong style={{color:"#ddd"}}>平均P</strong> {Math.round(dailyP.reduce((a,b)=>a+b,0)/3)}g/日</div>
+            </div>
+
+            <div style={{
+              background: "#1a1a0d", borderRadius: 10,
+              padding: "12px 14px", marginTop: 10,
+              border: "1px solid #E8B93133",
+              fontSize: 10, color: "#999", lineHeight: 1.6
+            }}>
+              <div style={{ fontSize: 11, fontWeight: 800, color: "#E8B931", marginBottom: 3 }}>⚠️ 注意</div>
+              <div>・Em Vietnamese 火曜定休→Dumbo Marketに変更済</div>
+              <div>・TMPL デイパス$40-50は変動あり。事前TEL確認</div>
+              <div>・ESB料金は2025年時点。改定の可能性あり</div>
+              <div>・為替$1=150で計算</div>
+              <div>・ニックスPO日程は仮定</div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(NYCTripPlanner));
+</script>
+</body>
+</html>
