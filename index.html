@@ -246,9 +246,10 @@ function LinkBtn({ href, children, color }) {
 function MealCard({ meal, dayColor }) {
   const [open, setOpen] = useState(false);
   const isClosed = meal.closed;
+  const gmapQuery = encodeURIComponent(meal.spot + " " + meal.address);
   const gmapUrl = meal.placeId
-    ? "https://www.google.com/maps/place/?q=place_id:" + meal.placeId
-    : "https://www.google.com/maps/search/" + encodeURIComponent(meal.spot + " " + meal.address);
+    ? "https://www.google.com/maps/search/?api=1&query=" + gmapQuery + "&query_place_id=" + meal.placeId
+    : "https://www.google.com/maps/search/?api=1&query=" + gmapQuery;
   const igUrl = meal.instagram ? "https://www.instagram.com/" + meal.instagram + "/" : null;
 
   return (
@@ -309,7 +310,10 @@ function MealCard({ meal, dayColor }) {
 }
 
 function ActivityRow({ a }) {
-  const gmapUrl = a.placeId ? "https://www.google.com/maps/place/?q=place_id:" + a.placeId : null;
+  const itemName = a.item.replace(/^[^\p{L}\p{N}]+/u, "").trim();
+  const gmapUrl = a.placeId
+    ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(itemName || "place") + "&query_place_id=" + a.placeId
+    : null;
   const igUrl = a.instagram ? "https://www.instagram.com/" + a.instagram + "/" : null;
 
   return (
